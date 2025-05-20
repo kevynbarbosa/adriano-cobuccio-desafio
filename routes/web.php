@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,5 +29,18 @@ Route::middleware('auth')->group(function () {
 Route::get('/test', function () {
     return Inertia::render('Test');
 })->name('test');
+
+
+Route::get('transaction/index', [TransactionController::class, 'index'])->name('transactions.index');
+
+Route::group(['prefix' => 'transfers', 'middleware' => ['auth']], function () {
+    Route::get('create', [DepositController::class, 'create'])->name('transfer.create');
+    Route::get('{transfer}/undo', [DepositController::class, 'undo'])->name('transfer.undo');
+});
+
+Route::group(['prefix' => 'deposits', 'middleware' => ['auth']], function () {
+    Route::get('create', [DepositController::class, 'create'])->name('deposit.create');
+    Route::get('{deposit}/undo', [DepositController::class, 'undo'])->name('deposit.undo');
+});
 
 require __DIR__ . '/auth.php';
