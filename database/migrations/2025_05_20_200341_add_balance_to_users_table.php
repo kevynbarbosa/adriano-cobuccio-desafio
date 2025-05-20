@@ -12,7 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->decimal('balance', 12, 2)->default(0)->after('email')->nullable();
+            $table->after('email', function (Blueprint $table) {
+                $table->string('account_number')->nullable();
+                $table->string('document_number')->nullable();
+                $table->decimal('balance', 12, 2)->default(0);
+            });
         });
     }
 

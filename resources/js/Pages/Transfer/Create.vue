@@ -12,7 +12,7 @@
 
                 <FieldWrap v-model="form" field="document" label="CPF/CNPJ" cpf_cnpj />
 
-                <FieldWrap v-model="form" field="value" label="Valor" currency />
+                <FieldWrap v-model="form" field="ammount" label="Valor" currency />
 
                 <div class="text-center">Novo saldo após a transferência: R$ xxxx.xx</div>
             </div>
@@ -44,7 +44,7 @@ const titulo = "Realizar transferência";
 const form = useForm({
     account: "",
     document: "",
-    value: "",
+    ammount: "",
 });
 
 const variable = ref(null);
