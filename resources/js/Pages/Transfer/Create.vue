@@ -14,7 +14,10 @@
 
                 <FieldWrap v-model="form" field="amount" label="Valor" currency />
 
-                <div class="text-center">Novo saldo após a transferência: R$ {{ newBalance }}</div>
+                <div v-if="form.amount" class="text-center">
+                    <div>Seu saldo após a transferência será de:</div>
+                    <div class="font-bold">R$ {{ decimalLocale(newBalance) }}</div>
+                </div>
             </div>
 
             <div class="mt-4 flex justify-center gap-2">
@@ -28,6 +31,7 @@
 <script setup>
 import FieldWrap from "@/Components/Form/FieldWrap.vue";
 import TituloCard from "@/Components/TituloCard.vue";
+import { decimalLocale } from "@/Utils/decimalUtils";
 import { Head, useForm } from "@inertiajs/vue3";
 import { Button } from "primevue";
 import { computed, ref } from "vue";
@@ -59,7 +63,10 @@ const newBalance = computed(() => {
 
 const modalRef = ref(null);
 function submit() {
-    form.post(route("transfer.store"), {
+    form.transform((data) => ({
+        ...data,
+        document: data.document.replace(/\D/g, ""), // Removendo pontuação da máscara
+    })).post(route("transfer.store"), {
         onSuccess: () => {
             modalRef.value.close();
         },

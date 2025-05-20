@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TransferStoreRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,12 +15,8 @@ class TransferController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(TransferStoreRequest $request)
     {
-        $request->validate([
-            'amount' => ['required', 'numeric', 'min:0.01'],
-        ]);
-
         $user = $request->user();
         $user->balance -= $request->amount;
         $user->save();
