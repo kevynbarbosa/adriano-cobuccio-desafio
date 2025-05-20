@@ -20,6 +20,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@inertiaui/modal-vue": "file:vendor/inertiaui/modal/vue",
         "@primeuix/themes": "^1.1.1",
         "primevue": "^4.3.4"
     }
