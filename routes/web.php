@@ -3,6 +3,7 @@
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransferController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,11 +32,9 @@ Route::get('/test', function () {
 })->name('test');
 
 
-Route::get('transaction/index', [TransactionController::class, 'index'])->name('transactions.index');
-
 Route::group(['prefix' => 'transfers', 'middleware' => ['auth']], function () {
-    Route::get('create', [DepositController::class, 'create'])->name('transfer.create');
-    Route::get('{transfer}/undo', [DepositController::class, 'undo'])->name('transfer.undo');
+    Route::get('create', [TransferController::class, 'create'])->name('transfer.create');
+    Route::get('{transfer}/undo', [TransferController::class, 'undo'])->name('transfer.undo');
 });
 
 Route::group(['prefix' => 'deposits', 'middleware' => ['auth']], function () {
