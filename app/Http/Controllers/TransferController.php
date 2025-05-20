@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransferStoreRequest;
+use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -17,11 +18,12 @@ class TransferController extends Controller
 
     public function store(TransferStoreRequest $request)
     {
-        $user = $request->user();
-        $user->balance -= $request->amount;
-        $user->save();
 
-        return redirect()->route('dashboard')->with('success', 'Transfer successful!');
+        (new TransactionService)->createTransaction(
+            $request->validated(),
+        );
+
+        return redirect()->route('dashboard');
     }
 
     public function undo(Request $request)
