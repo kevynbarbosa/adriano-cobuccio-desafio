@@ -1,5 +1,5 @@
 <template>
-    <Modal max-width="md" v-slot="{ close }">
+    <Modal ref="modalRef" max-width="md" v-slot="{ close }">
         <Head title="titulo" />
 
         <TituloCard :titulo="titulo"></TituloCard>
@@ -50,14 +50,19 @@ const form = useForm({
 const variable = ref(null);
 
 const newBalance = computed(() => {
-    if (form.ammount) {
-        return props.balance - form.ammount;
+    if (form.amount) {
+        return props.balance - form.amount;
     }
 
     return props.balance;
 });
 
+const modalRef = ref(null);
 function submit() {
-    form.post(route("transfer.store"));
+    form.post(route("transfer.store"), {
+        onSuccess: () => {
+            modalRef.value.close();
+        },
+    });
 }
 </script>
