@@ -14,11 +14,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'payer_id')->nullable()->constrained('users');
-            $table->foreignIdFor(User::class, 'payee_id')->nullable()->constrained('users');
-            $table->decimal('amount', 12, 2)->nullable();
-            $table->string('type')->nullable(); // TransactionTypeEnum
-            $table->string('status')->nullable(); // TransactionStatusEnum
+            $table->foreignIdFor(User::class, 'payer_id')->constrained('users');
+            $table->foreignIdFor(User::class, 'payee_id')->constrained('users');
+            $table->dateTime('date');
+            $table->decimal('amount', 12, 2);
+            $table->string('type'); // TransactionTypeEnum
+            $table->string('status'); // TransactionStatusEnum
             $table->timestamps();
         });
     }

@@ -12,9 +12,9 @@
 
                 <FieldWrap v-model="form" field="document" label="CPF/CNPJ" cpf_cnpj />
 
-                <FieldWrap v-model="form" field="ammount" label="Valor" currency />
+                <FieldWrap v-model="form" field="amount" label="Valor" currency />
 
-                <div class="text-center">Novo saldo após a transferência: R$ xxxx.xx</div>
+                <div class="text-center">Novo saldo após a transferência: R$ {{ newBalance }}</div>
             </div>
 
             <div class="mt-4 flex justify-center gap-2">
@@ -30,10 +30,10 @@ import FieldWrap from "@/Components/Form/FieldWrap.vue";
 import TituloCard from "@/Components/TituloCard.vue";
 import { Head, useForm } from "@inertiajs/vue3";
 import { Button } from "primevue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
-    saldo: {
+    balance: {
         type: Number,
         required: true,
     },
@@ -44,13 +44,20 @@ const titulo = "Realizar transferência";
 const form = useForm({
     account: "",
     document: "",
-    ammount: "",
+    amount: null,
 });
 
 const variable = ref(null);
 
+const newBalance = computed(() => {
+    if (form.ammount) {
+        return props.balance - form.ammount;
+    }
+
+    return props.balance;
+});
+
 function submit() {
-    alert("submit");
-    // form.post(route("transfer.store"));
+    form.post(route("transfer.store"));
 }
 </script>

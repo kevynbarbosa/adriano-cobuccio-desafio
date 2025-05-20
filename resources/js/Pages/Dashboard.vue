@@ -1,6 +1,14 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { decimalLocale } from "@/Utils/decimalUtils";
 import { Head } from "@inertiajs/vue3";
+
+const props = defineProps({
+    balance: {
+        type: Number,
+        required: true,
+    },
+});
 </script>
 
 <template>
@@ -16,7 +24,7 @@ import { Head } from "@inertiajs/vue3";
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <b>Saldo:</b>
-                        R$ XXXX.XX
+                        R$ {{ decimalLocale(balance) }}
                     </div>
                 </div>
             </div>
