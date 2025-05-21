@@ -50,7 +50,7 @@ const undoAvailable = computed(() => {
         return true;
     }
 
-    if (props.transaction.type == "TRANSFER" && props.transaction.subtype != "SENT") {
+    if (props.transaction.type == "TRANSFER" && props.transaction.subtype == "SENT") {
         return true;
     }
 
