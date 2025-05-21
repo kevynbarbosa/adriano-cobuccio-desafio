@@ -36,8 +36,9 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { decimalLocale } from "@/Utils/decimalUtils";
-import { Head } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import { Button } from "primevue";
+import { onMounted, onUnmounted } from "vue";
 import TransactionsList from "./partials/TransactionsList.vue";
 
 const props = defineProps({
@@ -49,5 +50,17 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+});
+
+let interval = null;
+
+onMounted(() => {
+    interval = setInterval(() => {
+        router.reload({ only: ["balance", "transactions"], preserveScroll: true, preserveState: true });
+    }, 3000);
+});
+
+onUnmounted(() => {
+    clearInterval(interval);
 });
 </script>
