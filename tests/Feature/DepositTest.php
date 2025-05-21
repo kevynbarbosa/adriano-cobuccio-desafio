@@ -57,7 +57,7 @@ test('user can refund a deposit', function () {
     $response->assertStatus(302);
 
     $updatedTransaction = Transaction::find($transaction->id);
-    $this->assertEquals('REFUNDED', $updatedTransaction->status);
+    $this->assertEquals(TransactionStatusEnum::REFUNDED, TransactionStatusEnum::from($updatedTransaction->status));
 });
 
 test('unauthenticated user cannot refund deposit', function () {

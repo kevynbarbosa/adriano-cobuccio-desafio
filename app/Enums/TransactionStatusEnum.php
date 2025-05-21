@@ -2,12 +2,12 @@
 
 namespace App\Enums;
 
-enum TransactionStatusEnum
+enum TransactionStatusEnum: string
 {
-    case PENDING;
-    case COMPLETED;
-    case FAILED;
-    case REFUNDED;
+    case PENDING = 'PENDING';
+    case COMPLETED = 'COMPLETED';
+    case FAILED = 'FAILED';
+    case REFUNDED = 'REFUNDED';
 
     public function getLabel(): string
     {
