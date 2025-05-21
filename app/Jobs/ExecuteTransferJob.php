@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Transaction;
-use App\Services\TransactionService;
+use App\UseCases\Transfer\ExecuteTransfer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
@@ -24,7 +24,7 @@ class ExecuteTransferJob implements ShouldQueue
      */
     public function handle(): void
     {
-        (new TransactionService)->executeTransaction(
+        (new ExecuteTransfer)->handle(
             $this->transaction,
         );
     }

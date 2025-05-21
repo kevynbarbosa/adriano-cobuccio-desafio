@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\UseCases\Dashboard;
 
 use App\Interfaces\TransactionRepositoryInterface;
 use App\Models\User;
-use App\Repositories\TransactionRepository;
 use App\ViewModel\TransactionViewModel;
+use App\Repositories\TransactionRepository;
 
-class DashboardService
+class GetDashboardData
 {
     private TransactionRepositoryInterface $transactionRepository;
 
@@ -16,7 +16,7 @@ class DashboardService
         $this->transactionRepository = new TransactionRepository();
     }
 
-    public function getDataByUser(User $user): array
+    public function handle(User $user): array
     {
         $transactions = $this->transactionRepository->getByUser($user->id);
 
