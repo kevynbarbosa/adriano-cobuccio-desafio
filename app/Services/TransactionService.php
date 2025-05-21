@@ -80,7 +80,7 @@ class TransactionService
         }
     }
 
-    public function undoTransaction(Transaction $transaction)
+    public function undoTransfer(Transaction $transaction)
     {
         DB::beginTransaction();
         try {

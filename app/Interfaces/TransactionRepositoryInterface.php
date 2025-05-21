@@ -11,6 +11,4 @@ interface TransactionRepositoryInterface
     public function getById(int $transactionId): ?Transaction;
 
     public function create(array $data): Transaction;
-
-    public function undo(int $transactionId): bool;
 }

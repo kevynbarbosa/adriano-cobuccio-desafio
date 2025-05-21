@@ -18,7 +18,7 @@
 <script setup>
 import TituloCard from "@/Components/TituloCard.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { Button } from "primevue";
+import { Button, useToast } from "primevue";
 import { ref } from "vue";
 
 const props = defineProps({
@@ -28,27 +28,24 @@ const props = defineProps({
     },
 });
 
+const toast = useToast();
+
 const titulo = "Reverter transferência";
 
-const form = useForm({
-    transaction_id: props.transaction.id,
-});
+const form = useForm({});
 
 const modalRef = ref(null);
 function submit() {
-    form.transform((data) => ({
-        ...data,
-        document: data.document.replace(/\D/g, ""), // Removendo pontuação da máscara
-    })).post(route("transfer.store"), {
+    form.post(route("transfer.undoStore", { transaction: props.transaction.id }), {
         onSuccess: () => {
-            toast.add({ severity: "success", summary: "Sucesso", detail: "Transferência solicitada", life: 3000 });
+            toast.add({ severity: "success", summary: "Sucesso", detail: "Reversão solicitada", life: 3000 });
             modalRef.value.close();
         },
         onError: (errors) => {
             toast.add({
                 severity: "error",
                 summary: "Erro",
-                detail: "Ocorreu um erro ao solicitar transferência",
+                detail: "Ocorreu um erro ao solicitar reversão da transferência",
                 life: 3000,
             });
         },

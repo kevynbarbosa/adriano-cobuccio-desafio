@@ -36,6 +36,7 @@ Route::group(['prefix' => 'transfers', 'middleware' => ['auth']], function () {
     Route::get('create', [TransferController::class, 'create'])->name('transfer.create');
     Route::post('store', [TransferController::class, 'store'])->name('transfer.store');
     Route::get('{transaction}/undo', [TransferController::class, 'undo'])->name('transfer.undo');
+    Route::post('{transaction}/undo', [TransferController::class, 'undoStore'])->name('transfer.undoStore');
 });
 
 Route::group(['prefix' => 'deposits', 'middleware' => ['auth']], function () {

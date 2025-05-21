@@ -33,4 +33,11 @@ class TransferController extends Controller
             'transaction' => $transaction,
         ]);
     }
+
+    public function undoStore(Request $request, Transaction $transaction)
+    {
+        (new TransactionService)->undoTransfer($transaction);
+
+        return redirect()->route('dashboard');
+    }
 }

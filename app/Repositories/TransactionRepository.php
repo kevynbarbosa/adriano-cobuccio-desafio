@@ -42,16 +42,4 @@ class TransactionRepository implements TransactionRepositoryInterface
         $transaction->status = $status;
         return $transaction->save();
     }
-
-    public function undo(int $transactionId): bool
-    {
-        $transaction = Transaction::find($transactionId);
-        if ($transaction) {
-            $transaction->status = TransactionStatusEnum::REFUNDED;
-            $transaction->save();
-            return true;
-        }
-
-        return false;
-    }
 }
