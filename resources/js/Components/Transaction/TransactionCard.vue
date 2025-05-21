@@ -18,8 +18,8 @@
             <div class="text-xs text-gray-500">{{ dateTimeLocale(transaction.date) }}</div>
         </div>
 
-        <div class="shrink" v-if="transaction.subtype != 'RECEIVED' && transaction.status != 'REFUNDED'">
-            <ModalLink :href="route('transfer.undo', transaction.id)" as="div">
+        <div class="shrink" v-if="undoAvailable">
+            <ModalLink :href="undoRoute" as="div">
                 <Button label="Desfazer" icon="mdi mdi-undo" severity="danger" size="small" />
             </ModalLink>
         </div>
@@ -30,7 +30,7 @@
 import { dateTimeLocale } from "@/Utils/dateUtils";
 import { decimalLocale } from "@/Utils/decimalUtils";
 import { Button } from "primevue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
     transaction: {
@@ -40,4 +40,32 @@ const props = defineProps({
 });
 
 const variable = ref(null);
+
+const undoAvailable = computed(() => {
+    if (props.transaction.status == "REFUNDED" || props.transaction.status == "FAILED") {
+        return false;
+    }
+
+    if (props.transaction.type == "DEPOSIT") {
+        return true;
+    }
+
+    if (props.transaction.type == "TRANSFER" && props.transaction.subtype != "SENT") {
+        return true;
+    }
+
+    return false;
+});
+
+const undoRoute = computed(() => {
+    if (props.transaction.type == "DEPOSIT") {
+        return route("deposit.undo", props.transaction.id);
+    }
+
+    if (props.transaction.type == "TRANSFER") {
+        return route("transfer.undo", props.transaction.id);
+    }
+
+    return null;
+});
 </script>
