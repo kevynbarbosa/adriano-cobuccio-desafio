@@ -54,8 +54,6 @@ const form = useForm({
     amount: null,
 });
 
-const variable = ref(null);
-
 const newBalance = computed(() => {
     if (form.amount) {
         return props.balance - form.amount;

@@ -7,6 +7,7 @@
             <i v-if="transaction.subtype == 'RECEIVED'" class="mdi mdi-arrow-down"></i>
             <i v-if="transaction.subtype == 'SENT'" class="mdi mdi-arrow-up"></i>
         </div>
+
         <div>
             <div class="flex grow flex-col justify-between">
                 <div class="text-sm font-semibold">{{ transaction.name }}</div>
@@ -15,12 +16,19 @@
             </div>
             <div class="text-xs text-gray-500">{{ dateTimeLocale(transaction.date) }}</div>
         </div>
+
+        <div class="shrink">
+            <ModalLink :href="route('transfer.undo', transaction.id)" as="div">
+                <Button label="Desfazer" severity="danger" size="small" />
+            </ModalLink>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { dateTimeLocale } from "@/Utils/dateUtils";
 import { decimalLocale } from "@/Utils/decimalUtils";
+import { Button } from "primevue";
 import { ref } from "vue";
 
 const props = defineProps({

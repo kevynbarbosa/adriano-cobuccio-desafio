@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TransferStoreRequest;
+use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -26,8 +27,10 @@ class TransferController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function undo(Request $request)
+    public function undo(Request $request, Transaction $transaction)
     {
-        return Inertia::render('Transfer/Undo');
+        return Inertia::render('Transfer/Undo', [
+            'transaction' => $transaction,
+        ]);
     }
 }

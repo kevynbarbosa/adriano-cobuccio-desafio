@@ -47,7 +47,7 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         $transaction = Transaction::find($transactionId);
         if ($transaction) {
-            $transaction->status = 'CANCELED';
+            $transaction->status = TransactionStatusEnum::REFUNDED;
             $transaction->save();
             return true;
         }

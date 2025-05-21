@@ -82,12 +82,19 @@ class TransactionService
 
     public function undoTransaction(Transaction $transaction)
     {
-        // if ($transaction->status !== TransactionStatusEnum::PENDING) {
-        //     throw new \Exception('Transaction cannot be undone');
-        // }
-
-        // $transaction->status = TransactionStatusEnum::CANCELED;
-        // $transaction->save();
+        DB::beginTransaction();
+        try {
+            $this->userRepository->updateBalance($transaction->payer, $transaction->amount);
+            $this->userRepository->updateBalance($transaction->payee, -$transaction->amount);
+            $this->transactionRepository->updateStatus($transaction, TransactionStatusEnum::REFUNDED);
+            DB::commit();
+        } catch (\Throwable $th) {
+            logger()->error('Error undoing transaction', [
+                'error' => $th->getMessage(),
+                'transaction_id' => $transaction->id,
+            ]);
+            DB::rollBack();
+        }
     }
 
     public function createDeposit(array $data)
