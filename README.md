@@ -14,3 +14,7 @@ Em terminal separado para organização:
 
 1. ./vendor/bin/sail npm i
 2. ./vendor/bin/sail npm run dev
+
+Detalhes sobre o projeto:
+
+1. Foi utilizando Laravel 12 com InertiaJS + Vue para o frontend por motivos de velocidade de entrega.
