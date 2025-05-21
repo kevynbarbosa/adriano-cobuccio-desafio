@@ -5,8 +5,8 @@ namespace App\Services;
 use App\Jobs\ExecuteTransferJob;
 use App\Models\Transaction;
 use App\Models\User;
-use App\TransactionStatusEnum;
-use App\TransactionTypeEnum;
+use App\Enums\TransactionStatusEnum;
+use App\Enums\TransactionTypeEnum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +17,7 @@ class TransactionService
     public function createTransaction(array $data)
     {
         try {
+            // Refatorar para usar o Repository
             $payee = User::where('account_number', $data['account'])
                 ->where('document_number', $data['document'])
                 ->firstOrFail();
