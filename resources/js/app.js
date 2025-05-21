@@ -6,6 +6,7 @@ import { Modal, ModalLink, renderApp } from "@inertiaui/modal-vue";
 import Aura from "@primeuix/themes/aura";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import PrimeVue from "primevue/config";
+import ToastService from "primevue/toastservice";
 import { createApp } from "vue";
 import VueTheMask from "vue-the-mask";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
@@ -27,6 +28,7 @@ createInertiaApp({
             })
             .component("Modal", Modal)
             .component("ModalLink", ModalLink)
+            .use(ToastService)
             .use(VueTheMask)
             .mount(el);
     },

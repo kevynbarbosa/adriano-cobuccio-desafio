@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@inertiaui/modal-vue": "file:vendor/inertiaui/modal/vue",
+        "@mdi/font": "^7.4.47",
         "@primeuix/themes": "^1.1.1",
         "primevue": "^4.3.4",
         "vue-the-mask": "^0.11.1"

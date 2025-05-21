@@ -1,6 +1,6 @@
 <template>
     <Modal ref="modalRef" max-width="md" v-slot="{ close }">
-        <Head title="titulo" />
+        <Head :title="titulo" />
 
         <TituloCard :titulo="titulo"></TituloCard>
 
@@ -34,7 +34,10 @@ import TituloCard from "@/Components/TituloCard.vue";
 import { decimalLocale } from "@/Utils/decimalUtils";
 import { Head, useForm } from "@inertiajs/vue3";
 import { Button } from "primevue";
+import { useToast } from "primevue/usetoast";
 import { computed, ref } from "vue";
+
+const toast = useToast();
 
 const props = defineProps({
     balance: {
@@ -68,7 +71,16 @@ function submit() {
         document: data.document.replace(/\D/g, ""), // Removendo pontuação da máscara
     })).post(route("transfer.store"), {
         onSuccess: () => {
+            toast.add({ severity: "success", summary: "Sucesso", detail: "Transferência solicitada", life: 3000 });
             modalRef.value.close();
+        },
+        onError: (errors) => {
+            toast.add({
+                severity: "error",
+                summary: "Erro",
+                detail: "Ocorreu um erro ao solicitar transferência",
+                life: 3000,
+            });
         },
     });
 }

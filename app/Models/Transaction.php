@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    //
+    public function payer()
+    {
+        return $this->belongsTo(User::class, 'payer_id');
+    }
+
+    public function payee()
+    {
+        return $this->belongsTo(User::class, 'payee_id');
+    }
 }
