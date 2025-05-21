@@ -18,3 +18,5 @@ Em terminal separado para organização:
 Detalhes sobre o projeto:
 
 1. Foi utilizando Laravel 12 com InertiaJS + Vue para o frontend por motivos de velocidade de entrega.
+2. PrimeVUE como biblioteca de componentes
+3. Inertia UI Modal para utilização de modal
