@@ -7,29 +7,43 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Enums\TransactionStatusEnum;
 use App\Enums\TransactionTypeEnum;
+use App\Repositories\TransactionRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class TransactionService
 {
-    public function __construct() {}
+    private $userRepository;
+    private $transactionRepository;
+
+    public function __construct()
+    {
+        $this->userRepository = new UserRepository();
+        $this->transactionRepository = new TransactionRepository();
+    }
 
     public function createTransaction(array $data)
     {
         try {
-            // Refatorar para usar o Repository
-            $payee = User::where('account_number', $data['account'])
-                ->where('document_number', $data['document'])
-                ->firstOrFail();
+            $payee = $this->userRepository->getByAccountAndDocumento($data['account'], $data['document']);
+            if (!$payee) {
+                throw new \Exception('User not found');
+            }
 
-            $transaction = new Transaction();
-            $transaction->payer_id = Auth::id();
-            $transaction->payee_id = $payee->id;
-            $transaction->amount = $data['amount'];
-            $transaction->date = now();
-            $transaction->type = TransactionTypeEnum::TRANSFER;
-            $transaction->status = TransactionStatusEnum::PENDING;
-            $transaction->save();
+            $payload = [
+                'payer_id' => Auth::id(),
+                'payee_id' => $payee->id,
+                'amount' => $data['amount'],
+                'date' => now(),
+                'status' => TransactionStatusEnum::PENDING,
+                'type' => TransactionTypeEnum::TRANSFER,
+            ];
+
+            $transaction = $this->transactionRepository->create($payload);
+            if (!$transaction) {
+                throw new \Exception('Transaction not created');
+            }
 
             ExecuteTransferJob::dispatch($transaction);
         } catch (\Throwable $th) {
@@ -45,16 +59,13 @@ class TransactionService
     {
         DB::beginTransaction();
         try {
-            $payer = User::findOrFail($transaction->payer_id);
-            $payee = User::findOrFail($transaction->payee_id);
-            $payer->balance -= $transaction->amount;
-            $payee->balance += $transaction->amount;
+            $payer = $this->userRepository->getById($transaction->payer_id);
+            $payee = $this->userRepository->getById($transaction->payee_id);
 
-            $payer->save();
-            $payee->save();
+            $this->userRepository->updateBalance($payer, -$transaction->amount);
+            $this->userRepository->updateBalance($payee, $transaction->amount);
+            $this->transactionRepository->updateStatus($transaction, TransactionStatusEnum::COMPLETED);
 
-            $transaction->status = TransactionStatusEnum::COMPLETED;
-            $transaction->save();
             DB::commit();
         } catch (\Throwable $th) {
             logger()->error('Error executing transaction', [
@@ -63,8 +74,8 @@ class TransactionService
             ]);
             DB::rollBack();
 
-            $transaction->status = TransactionStatusEnum::FAILED;
-            $transaction->save();
+            $this->transactionRepository->updateStatus($transaction, TransactionStatusEnum::FAILED);
+
             throw $th;
         }
     }

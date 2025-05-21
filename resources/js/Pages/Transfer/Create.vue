@@ -1,5 +1,5 @@
 <template>
-    <Modal ref="modalRef" max-width="md" v-slot="{ close }">
+    <Modal ref="modalRef" max-width="md" v-slot="{ close }" :close-explicitly="true">
         <Head :title="titulo" />
 
         <TituloCard :titulo="titulo"></TituloCard>

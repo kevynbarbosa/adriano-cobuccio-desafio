@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\TransactionStatusEnum;
 use App\Interfaces\TransactionRepositoryInterface;
 use App\Models\Transaction;
 
@@ -34,6 +35,12 @@ class TransactionRepository implements TransactionRepositoryInterface
         $transaction->save();
 
         return $transaction;
+    }
+
+    public function updateStatus(Transaction $transaction, TransactionStatusEnum $status): bool
+    {
+        $transaction->status = $status;
+        return $transaction->save();
     }
 
     public function undo(int $transactionId): bool
