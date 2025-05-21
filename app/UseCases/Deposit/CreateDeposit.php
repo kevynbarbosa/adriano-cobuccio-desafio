@@ -2,9 +2,9 @@
 
 namespace App\UseCases\Deposit;
 
-use App\Jobs\ExecuteTransferJob;
 use App\Enums\TransactionTypeEnum;
 use App\Enums\TransactionStatusEnum;
+use App\Jobs\ExecuteDepositJob;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\TransactionRepository;
 
@@ -35,7 +35,7 @@ class CreateDeposit
                 throw new \Exception('Transaction not created');
             }
 
-            ExecuteTransferJob::dispatch($transaction);
+            ExecuteDepositJob::dispatch($transaction);
         } catch (\Throwable $th) {
             logger()->error('Error creating transaction', [
                 'error' => $th->getMessage(),
