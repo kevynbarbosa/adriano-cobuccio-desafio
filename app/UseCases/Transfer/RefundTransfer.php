@@ -29,7 +29,7 @@ class RefundTransfer
             $this->transactionRepository->updateStatus($transaction, TransactionStatusEnum::REFUNDED);
             DB::commit();
         } catch (\Throwable $th) {
-            logger()->error('Error undoing transaction', [
+            logger()->error('Error refunding transfer transaction', [
                 'error' => $th->getMessage(),
                 'transaction_id' => $transaction->id,
             ]);

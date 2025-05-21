@@ -11,7 +11,7 @@ class DepositStoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class DepositStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amount' => ['required', 'numeric', 'min:0.01'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'amount.required' => 'Valor é obrigatório',
+            'amount.numeric' => 'Valor deve ser numérico',
+            'amount.min' => 'Valor deve ser maior que 0.01',
         ];
     }
 }

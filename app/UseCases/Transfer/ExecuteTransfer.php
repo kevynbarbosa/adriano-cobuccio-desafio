@@ -33,7 +33,7 @@ class ExecuteTransfer
 
             DB::commit();
         } catch (\Throwable $th) {
-            logger()->error('Error executing transaction', [
+            logger()->error('Error executing transfer transaction', [
                 'error' => $th->getMessage(),
                 'transaction_id' => $transaction->id,
             ]);

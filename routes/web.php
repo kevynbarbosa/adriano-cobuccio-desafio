@@ -41,7 +41,9 @@ Route::group(['prefix' => 'transfers', 'middleware' => ['auth']], function () {
 
 Route::group(['prefix' => 'deposits', 'middleware' => ['auth']], function () {
     Route::get('create', [DepositController::class, 'create'])->name('deposit.create');
-    Route::get('{deposit}/undo', [DepositController::class, 'undo'])->name('deposit.undo');
+    Route::post('store', [DepositController::class, 'store'])->name('deposit.store');
+    Route::get('{transaction}/undo', [DepositController::class, 'undo'])->name('deposit.undo');
+    Route::post('{transaction}/undo', [DepositController::class, 'undoStore'])->name('deposit.undoStore');
 });
 
 require __DIR__ . '/auth.php';

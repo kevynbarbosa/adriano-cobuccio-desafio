@@ -3,11 +3,11 @@
 namespace App\Jobs;
 
 use App\Models\Transaction;
-use App\UseCases\Transfer\ExecuteTransfer;
+use App\UseCases\Deposit\ExecuteDeposit;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class ExecuteTransferJob implements ShouldQueue
+class ExecuteDepositJob implements ShouldQueue
 {
     use Queueable;
 
@@ -15,7 +15,7 @@ class ExecuteTransferJob implements ShouldQueue
 
     public function handle(): void
     {
-        (new ExecuteTransfer)->handle(
+        (new ExecuteDeposit)->handle(
             $this->transaction,
         );
     }
