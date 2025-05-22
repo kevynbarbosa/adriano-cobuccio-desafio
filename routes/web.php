@@ -46,4 +46,6 @@ Route::group(['prefix' => 'deposits', 'middleware' => ['auth']], function () {
     Route::post('{transaction}/undo', [DepositController::class, 'undoStore'])->name('deposit.undoStore');
 });
 
+
+
 require __DIR__ . '/auth.php';

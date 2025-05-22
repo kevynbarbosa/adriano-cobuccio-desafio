@@ -2,7 +2,7 @@ Adentrar diretório do projeto e rodar os comandos
 
 Instalação dos pacotes sem necessidade de php e composer instalados localmente:
 
-1. docker run --rm -it -v $(pwd):/app -w /app laravelsail/php83-composer:latest composer i
+1. docker run --rm -it -v $(pwd):/app -w /app laravelsail/php83-composer:latest composer install
 
 Utilização do Sail para docker:
 
