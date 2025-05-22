@@ -62,7 +62,7 @@ const submit = () => {
 
                 <TextInput
                     id="document_number"
-                    type="document_number"
+                    type="text"
                     class="mt-1 block w-full"
                     v-model="form.document_number"
                     required
