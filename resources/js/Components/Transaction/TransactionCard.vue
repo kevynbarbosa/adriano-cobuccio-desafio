@@ -1,6 +1,6 @@
 <template>
     <div
-        class="my-2 flex gap-4 rounded-lg p-4 transition duration-200 ease-in-out hover:bg-gray-100"
+        class="my-2 flex gap-4 rounded-lg p-4 transition duration-200 ease-in-out hover:bg-gray-100 dark:hover:bg-slate-600"
         :class="{ 'line-through': transaction.status == 'REFUNDED' }"
     >
         <div
