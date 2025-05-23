@@ -3,12 +3,12 @@
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">Carteira</h2>
+            <h2 class="text-xl font-semibold leading-tight">Carteira</h2>
         </template>
 
         <div class="pt-4">
             <div class="mx-auto max-w-2xl sm:px-6 lg:px-8">
-                <div class="overflow-hidden bg-white p-4 shadow-sm sm:rounded-lg">
+                <div class="overflow-hidden bg-white p-4 shadow-sm sm:rounded-lg dark:bg-slate-600">
                     <div class="flex items-center justify-center text-2xl">
                         <div>Saldo:</div>
                         <div class="ml-2 font-semibold" :class="{ 'text-red-600': balance < 0 }">

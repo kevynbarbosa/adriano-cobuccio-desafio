@@ -9,5 +9,10 @@ body {
 }
 
 .card {
-    @apply overflow-hidden bg-white p-4 shadow-sm sm:rounded-lg;
+    @apply overflow-hidden bg-white p-4 shadow-sm sm:rounded-lg dark:bg-slate-700;
+}
+
+/* Dark mode Modal */
+.im-modal-content {
+    @apply dark:bg-slate-700;
 }

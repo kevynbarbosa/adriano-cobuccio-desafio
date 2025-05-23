@@ -6,15 +6,19 @@ import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 import { Toast } from "primevue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const showingNavigationDropdown = ref(false);
+
+onMounted(() => {
+    // window.addEventListener("resize", handleResize);
+});
 </script>
 
 <template>
-    <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="border-b border-gray-100 bg-white">
+    <div class="text-gray-900 dark:text-white">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+            <nav class="border-b border-gray-100 bg-white dark:bg-gray-600">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
@@ -141,7 +145,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="bg-white shadow dark:bg-slate-700" v-if="$slots.header">
                 <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
